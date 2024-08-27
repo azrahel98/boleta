@@ -20,7 +20,16 @@
   .path {
     @apply absolute right-0 top-px h-9 w-1 rounded-lg bg-brand-500 dark:bg-brand-400;
   }
+
+  p {
+    @apply font-bold text-navy-700;
+  }
+
+  span {
+    @apply font-bold text-brand-500 dark:text-white;
+  }
 }
+
 .card {
   @apply flex flex-col rounded-[10px] border-[1px] border-gray-200 bg-white bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:bg-navy-800 dark:text-white dark:shadow-none  px-6;
 }

@@ -7,17 +7,38 @@ import {
 } from 'vue-router'
 
 import login from './view/login.vue'
+//@ts-ignore
 import dashboard from './view/dashboard.vue'
 import { userStore } from '@store/user'
 import { jwtDecode } from 'jwt-decode'
 import { compareAsc } from 'date-fns'
+import Home from './view/dashboard/home.vue'
+import Buscar from './view/dashboard/buscar.vue'
+import Convocatoria from './view/dashboard/convocatoria.vue'
 
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
     name: 'home',
     component: dashboard,
-    beforeEnter: (to, from, next) => middleware(to, from, next)
+    beforeEnter: (to, from, next) => middleware(to, from, next),
+    children: [
+      {
+        path: '/',
+        name: 'dashboard',
+        component: Home
+      },
+      {
+        path: '/',
+        name: 'buscar',
+        component: Buscar
+      },
+      {
+        path: '/',
+        name: 'convocatorias',
+        component: Convocatoria
+      }
+    ]
   },
   {
     path: '/login',

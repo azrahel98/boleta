@@ -1,242 +1,211 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 p-8">
-    <div class="w-full max-w-4xl mx-auto bg-white shadow-xl rounded-2xl overflow-hidden">
-      <!-- Header -->
-      <div class="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-6">
-        <div class="flex justify-between items-center">
-          <div class="flex items-center space-x-4">
-            <div class="h-16 w-16 rounded-full bg-white border-2 border-white overflow-hidden">
-              <img
-                :src="trabajador.avatarUrl"
-                :alt="`${trabajador.nombre} ${trabajador.apellido}`"
-                class="h-full w-full object-cover"
-              />
-            </div>
-            <div>
-              <h1 class="text-2xl font-bold">{{ trabajador.nombre }} {{ trabajador.apellido }}</h1>
-              <p class="text-blue-100">{{ trabajador.cargo }}</p>
-            </div>
-          </div>
-          <button
-            @click="cerrarSesion"
-            class="bg-white text-blue-600 px-4 py-2 rounded-lg flex items-center"
+  <div class="flex w-full bg-lightPrimary">
+    <sidebar :open="sibar.abrir" :close="close" />
+    <div
+      class="h-full w-full dark:!bg-navy-900"
+      :class="sibar.opacity === true ? 'blur-sm pointer-events-none' : ''"
+    >
+      <main class="mx-[12px] h-full flex-none transition-all md:pr-2 xl:ml-[313px]">
+        <div class="h-full view">
+          <nav
+            class="sticky top-4 z-40 flex flex-row flex-wrap items-center justify-between rounded-xl bg-white/10 p-2 backdrop-blur-xl dark:bg-[#0b14374d] bg-red-50"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-4 w-4 mr-2"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-              />
-            </svg>
-            Cerrar Sesión
-          </button>
-        </div>
-      </div>
-
-      <!-- Content -->
-      <div class="p-6">
-        <!-- Tabs -->
-        <div class="mb-4">
-          <button
-            @click="activeTab = 'profile'"
-            :class="[
-              'px-4 py-2 rounded-lg mr-2',
-              activeTab === 'profile' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'
-            ]"
-          >
-            Perfil
-          </button>
-          <button
-            @click="activeTab = 'payslips'"
-            :class="[
-              'px-4 py-2 rounded-lg',
-              activeTab === 'payslips' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'
-            ]"
-          >
-            Boletas de Pago
-          </button>
-        </div>
-
-        <!-- Profile Tab -->
-        <div v-if="activeTab === 'profile'" class="bg-white rounded-lg shadow p-6">
-          <h2 class="text-xl font-bold mb-4">Información Personal</h2>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div v-for="(value, key) in profileInfo" :key="key" class="space-y-2">
-              <p class="text-sm font-medium text-gray-500">{{ key }}</p>
-              <p>{{ value }}</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Payslips Tab -->
-        <div v-if="activeTab === 'payslips'" class="bg-white rounded-lg shadow p-6">
-          <h2 class="text-xl font-bold mb-4">Boletas de Pago</h2>
-          <div class="flex space-x-4 mb-6">
-            <select
-              v-model="mesSeleccionado"
-              class="w-[180px] border border-gray-300 rounded-md p-2"
-            >
-              <option value="">Selecciona un mes</option>
-              <option v-for="mes in meses" :key="mes.value" :value="mes.value">
-                {{ mes.label }}
-              </option>
-            </select>
-            <select
-              v-model="anioSeleccionado"
-              class="w-[180px] border border-gray-300 rounded-md p-2"
-            >
-              <option value="">Selecciona un año</option>
-              <option v-for="anio in anios" :key="anio" :value="anio">
-                {{ anio }}
-              </option>
-            </select>
-          </div>
-          <div class="h-[300px] overflow-y-auto pr-4">
-            <div v-if="boletasFiltradas.length > 0">
-              <div
-                v-for="boleta in boletasFiltradas"
-                :key="boleta.id"
-                class="flex items-center justify-between p-4 border-b last:border-b-0 hover:bg-gray-50 transition-colors"
-              >
-                <div class="flex items-center space-x-4">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-6 w-6 text-blue-500"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                    />
-                  </svg>
-                  <div>
-                    <p class="font-medium">Boleta {{ formatDate(boleta.fecha) }}</p>
-                    <p class="text-sm text-gray-500">Monto: ${{ boleta.monto.toFixed(2) }}</p>
-                  </div>
-                </div>
-                <button
-                  @click="descargarBoleta(boleta.urlDescarga)"
-                  class="flex items-center space-x-2 px-3 py-1 border border-gray-300 rounded-md hover:bg-blue-50 hover:text-blue-600 transition-colors"
+            <div class="ml-[6px]">
+              <div class="h-6 w-[224px] pt-1">
+                <a
+                  className="text-sm font-normal text-navy-700 hover:underline dark:text-white dark:hover:text-white"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-4 w-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-                    />
-                  </svg>
-                  <span>Descargar</span>
-                </button>
+                  Pages
+                </a>
               </div>
             </div>
-            <p v-else class="text-center text-gray-500 mt-4">
-              No hay boletas disponibles para el período seleccionado.
-            </p>
-          </div>
+            <!-- Aqui -->
+
+            <div class="flex justify-items-center align-content-center items-center gap-3">
+              <div
+                v-if="router.currentRoute.value.name != 'buscar'"
+                class="relative mt-[3px] flex h-[61px] w-[355px] flex-grow items-center justify-between px-3 rounded-full bg-white px-0 py-2 shadow-xl shadow-shadow-500 dark:!bg-navy-800 dark:shadow-none md:w-[320px] md:flex-grow-0 md:gap-1 xl:w-[365px] xl:gap-2"
+              >
+                <div
+                  class="flex h-full items-center w-full rounded-full bg-lightPrimary text-navy-700 dark:bg-navy-900 dark:text-white xl:w-[225px]"
+                >
+                  <p class="pl-3 pr-2 text-xl">
+                    <search-icon class="icon icon-sm" />
+                  </p>
+                  <div class="dropdown dropdown-end">
+                    <input
+                      type="text"
+                      @keyup="buscar"
+                      v-model="search"
+                      placeholder="Search..."
+                      class="block h-full text-center w-full rounded-full bg-lightPrimary text-sm font-medium text-navy-700 outline-none placeholder:!text-gray-400 dark:bg-navy-900 dark:text-white dark:placeholder:!text-white sm:w-fit"
+                    />
+                    <div tabindex="1" class="dropdown-content personas shadow-lg bg-white shadow">
+                      <div
+                        v-for="x in personas"
+                        class="flex hover:bg-lightPrimary"
+                        @click="ruta(x.dni)"
+                      >
+                        <img v-if="x.sexo == 'M'" src="../assets/mann.svg" class="imagen" />
+                        <img v-else src="../assets/mujer.svg" class="imagen" />
+                        <h1>{{ x.nombres }}</h1>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <span
+                  className="flex cursor-pointer mr-1 text-xl text-gray-600 dark:text-white xl:hidden"
+                >
+                  <menu-icon
+                    class="h-5 w-5"
+                    v-if="!sibar.abrir"
+                    @click="() => ((sibar.abrir = true), (sibar.opacity = true))"
+                  />
+                  <x-icon class="h-5 w-5" v-else @click="close" />
+                </span>
+              </div>
+              <div class="relative flex dropdown dropdown-end">
+                <div class="flex">
+                  <img
+                    tabindex="0"
+                    role="button"
+                    class="h-10 w-10 rounded-full object-contain"
+                    src="../assets/logo.png"
+                    alt="Elon Musk"
+                  />
+                </div>
+                <div
+                  tabindex="0"
+                  class="dropdown-content py-2 top-8 -left-[180px] w-max absolute z-10 origin-top-right transition-all duration-300 ease-in-out"
+                >
+                  <div
+                    className="flex h-48 w-56 flex-col justify-start rounded-[20px] bg-white bg-cover bg-no-repeat shadow-xl shadow-shadow-500 dark:!bg-navy-700 dark:text-white dark:shadow-none"
+                  >
+                    <div className="mt-3 ml-4">
+                      <div className="flex items-center gap-2">
+                        <p className="text-sm font-bold text-navy-700 dark:text-white">
+                          👋 Hey, Adela
+                        </p>
+                        {" "}
+                      </div>
+                    </div>
+                    <div className="mt-3 h-px w-full bg-gray-200 dark:bg-white/20 " />
+
+                    <div className="mt-3 ml-4 flex flex-col">
+                      <a
+                        href=" "
+                        className="text-sm text-gray-800 dark:text-white hover:dark:text-white"
+                      >
+                        Profile Settings
+                      </a>
+                      <a
+                        href=" "
+                        className="mt-3 text-sm text-gray-800 dark:text-white hover:dark:text-white"
+                      >
+                        Newsletter Settings
+                      </a>
+                      <a
+                        href=" "
+                        className="mt-3 text-sm font-medium text-red-500 hover:text-red-500"
+                      >
+                        Log Out
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </nav>
+
+          <RouterView class="mt-10 mx-auto mb-auto p-2 md:pr-2"></RouterView>
         </div>
-      </div>
+      </main>
     </div>
   </div>
 </template>
 
-<script setup>
-import { ref, computed } from 'vue'
-import { makepdf } from '../tools/pdf'
+<script setup lang="ts">
+import sidebar from '../components/sidebar.vue'
+// import { invoke } from '@tauri-apps/api'
+import { ref } from 'vue'
+import { RouterView } from 'vue-router'
+import { router } from '../router'
 
-const activeTab = ref('profile')
-const mesSeleccionado = ref('')
-const anioSeleccionado = ref('')
-
-const trabajador = ref({
-  id: '12345',
-  nombre: 'Juan',
-  apellido: 'Pérez',
-  email: 'juan.perez@empresa.com',
-  cargo: 'Desarrollador Senior',
-  departamento: 'Tecnología',
-  fechaIngreso: '2020-03-15',
-  sueldo: 1700.0,
-  afp: 'AFP Modelo',
-  tipoContrato: 'Indefinido',
-  avatarUrl: '/placeholder.svg?height=100&width=100'
+const sibar = ref({
+  abrir: false,
+  opacity: false
 })
+window.addEventListener('resize', () =>
+  window.innerWidth < 1200
+    ? (sibar.value = { abrir: false, opacity: false })
+    : (sibar.value = { abrir: true, opacity: false })
+)
 
-const profileInfo = computed(() => ({
-  Email: trabajador.value.email,
-  Departamento: trabajador.value.departamento,
-  'Fecha de Ingreso': new Date(trabajador.value.fechaIngreso).toLocaleDateString('es-ES'),
-  'Tipo de Contrato': trabajador.value.tipoContrato,
-  'Sueldo Base': `$${trabajador.value.sueldo.toFixed(2)}`,
-  AFP: trabajador.value.afp
-}))
-
-const boletas = ref([
-  { id: '1', fecha: '2023-05-01', monto: 1500.0, urlDescarga: '/boletas/mayo2023.pdf' },
-  { id: '2', fecha: '2023-06-01', monto: 1500.0, urlDescarga: '/boletas/junio2023.pdf' },
-  { id: '3', fecha: '2023-07-01', monto: 1600.0, urlDescarga: '/boletas/julio2023.pdf' },
-  { id: '4', fecha: '2023-08-01', monto: 1600.0, urlDescarga: '/boletas/agosto2023.pdf' },
-  { id: '5', fecha: '2023-09-01', monto: 1600.0, urlDescarga: '/boletas/septiembre2023.pdf' },
-  { id: '6', fecha: '2023-10-01', monto: 1700.0, urlDescarga: '/boletas/octubre2023.pdf' },
-  { id: '7', fecha: '2023-11-01', monto: 1700.0, urlDescarga: '/boletas/noviembre2023.pdf' },
-  { id: '8', fecha: '2023-12-01', monto: 1700.0, urlDescarga: '/boletas/diciembre2023.pdf' }
-])
-
-const meses = [
-  { value: '1', label: 'Enero' },
-  { value: '2', label: 'Febrero' },
-  { value: '3', label: 'Marzo' },
-  { value: '4', label: 'Abril' },
-  { value: '5', label: 'Mayo' },
-  { value: '6', label: 'Junio' },
-  { value: '7', label: 'Julio' },
-  { value: '8', label: 'Agosto' },
-  { value: '9', label: 'Septiembre' },
-  { value: '10', label: 'Octubre' },
-  { value: '11', label: 'Noviembre' },
-  { value: '12', label: 'Diciembre' }
-]
-
-const anios = ['2023', '2022', '2021', '2020']
-
-const boletasFiltradas = computed(() => {
-  return boletas.value.filter((boleta) => {
-    if (!mesSeleccionado.value || !anioSeleccionado.value) return true
-    const fecha = new Date(boleta.fecha)
-    return (
-      fecha.getMonth() === parseInt(mesSeleccionado.value) - 1 &&
-      fecha.getFullYear() === parseInt(anioSeleccionado.value)
-    )
-  })
-})
-
-const descargarBoleta = (urlDescarga) => {
-  console.log(`Descargando boleta desde: ${urlDescarga}`)
+const close = () => {
+  sibar.value = { abrir: false, opacity: false }
 }
 
-const cerrarSesion = () => {
-  makepdf()
+const personas = ref<Array<any>>([])
+
+const search = ref('')
+
+const buscar = async () => {
+  try {
+    if (search.value.length > 3) {
+      personas.value = []
+      //   const datos = (await invoke('buscar_trabajadores', { nombres: search.value })) as Array<any>
+      //   personas.value = datos
+    }
+  } catch (error) {
+    console.log(error)
+  }
 }
 
-const formatDate = (dateString) => {
-  const date = new Date(dateString)
-  return date.toLocaleDateString('es-ES', { month: 'long', year: 'numeric' })
+const ruta = (dni: string) => {
+  personas.value = []
+  search.value = ''
+
+  router.replace({ name: 'trabajador', params: { dni } })
 }
 </script>
+
+<style lang="scss" scoped>
+.view {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: 8vh auto;
+  align-items: start;
+}
+
+.abierto {
+  opacity: 0.2;
+}
+
+.personas {
+  position: fixed;
+  width: 40vw;
+  margin-top: 2vh;
+  border-radius: 20px;
+  font-weight: 500;
+  font-size: 0.8rem;
+  text-align: center;
+  max-height: 50vh;
+  overflow-y: auto;
+  div {
+    cursor: pointer;
+    padding: 0;
+    padding-top: 1vh;
+    padding-left: 1vh;
+    padding-right: 1vh;
+
+    max-height: 50vh;
+    .imagen {
+      width: 5vh;
+    }
+  }
+  :hover {
+    border-radius: 10px;
+  }
+}
+</style>
