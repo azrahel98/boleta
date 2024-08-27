@@ -12,9 +12,9 @@ export const makepdf = () => {
 
   // Encabezado
   doc.setFontSize(12)
-  doc.addImage('data:image/jpeg;base64,...', 'JPEG', margin, margin, 60, 60) // Logo
-  doc.setFontSize(14)
-  doc.text('Nombre de la Entidad', margin + 70, margin + 30)
+  doc.addImage('../assets/vue.svg', 'JPEG', margin, margin, 60, 60) // Logo
+  doc.setFontSize(10)
+  doc.text('Municipalidad de Villa el Salvador', margin, margin+20)
   doc.setFontSize(16)
   doc.text('BOLETA DE PAGO - PLANILLA', pageWidth / 2, margin + 40, { align: 'center' })
   doc.setFontSize(10)
@@ -23,7 +23,7 @@ export const makepdf = () => {
   doc.text('Período: Enero 2024', pageWidth / 2, margin + 60, { align: 'center' })
 
   // Información del empleador y empleado (dos columnas)
-  const sectionStartY = margin + 100
+  const sectionStartY = margin + 90
   const columnWidth = (pageWidth - 2 * margin) / 2
   doc.setFontSize(10)
 
@@ -131,5 +131,6 @@ export const makepdf = () => {
   doc.text('https://mef.gob.pe/boletapago', pageWidth - margin, pageHeight - 80, { align: 'right' })
 
   // Guardar PDF
-  doc.save('boleta_pago.pdf')
+  doc.output('dataurlnewwindow')
+  // doc.save('boleta_pago.pdf')
 }
