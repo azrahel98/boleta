@@ -3,9 +3,9 @@
     <sidebar :open="sibar.abrir" :close="close" />
     <div
       class="h-full w-full dark:!bg-navy-900"
-      :class="sibar.opacity === true ? 'blur-sm pointer-events-none' : ''"
+      :class="sibar.opacity === true ? 'blur-sm pointer-events-none abierto' : ''"
     >
-      <main class="mx-[12px] h-full flex-none transition-all md:pr-2 xl:ml-[313px]">
+      <main class="mx-[12px] h-full flex-none transition-all md:pr-2 xl:ml-[250px]">
         <div class="h-full view">
           <nav
             class="sticky top-4 z-40 flex flex-row flex-wrap items-center justify-between rounded-xl bg-white/10 p-2 backdrop-blur-xl dark:bg-[#0b14374d] bg-red-50"
@@ -133,7 +133,7 @@ import { RouterView } from 'vue-router'
 import { router } from '../router'
 
 const sibar = ref({
-  abrir: false,
+  abrir: true,
   opacity: false
 })
 window.addEventListener('resize', () =>
@@ -168,6 +168,14 @@ const ruta = (dni: string) => {
 
   router.replace({ name: 'trabajador', params: { dni } })
 }
+
+window.addEventListener('resize', () => {
+  if (window.innerWidth >= 1200) {
+    sibar.value.abrir = true
+  } else {
+    sibar.value.abrir = false
+  }
+})
 </script>
 
 <style lang="scss" scoped>
@@ -179,7 +187,8 @@ const ruta = (dni: string) => {
 }
 
 .abierto {
-  opacity: 0.2;
+  background: rgba(203, 212, 221, 0.5); /* Color de fondo transparente */
+  z-index: 1;
 }
 
 .personas {

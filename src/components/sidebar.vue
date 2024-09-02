@@ -1,7 +1,7 @@
 <template>
   <div
     :class="open ? 'translate-x-0 left-9 sidebaropen' : '-translate-x-96 '"
-    class="sm:none duration-175 linear fixed !z-50 flex min-h-full flex-col bg-white pb-10 shadow-2xl shadow-white/5 transition-all dark:!bg-navy-800 dark:text-white md:!z-50 lg:!z-50 xl:!z-0"
+    class="sm:none min-w-[210px] duration-175 linear fixed !z-50 flex min-h-full flex-col bg-white pb-10 shadow-2xl shadow-white/5 transition-all dark:!bg-navy-800 dark:text-white md:!z-50 lg:!z-50 xl:!z-0"
   >
     <span
       className="absolute top-4 right-4 block cursor-pointer xl:hidden font-medium text-gray-600"
@@ -19,32 +19,40 @@
     <ul className="mb-auto pt-1">
       <router-link :to="{ name: 'dashboard' }">
         <div class="relative mb-3 flex hover:cursor-pointer">
-          <li class="my-[3px] flex cursor-pointer items-center px-8">
-            <span class="font-medium text-gray-600">
-              <layout-dashboard-icon />
+          <!-- flex items-center w-full px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg -->
+          <li
+            class="flex w-full cursor-pointer px-4 py-1 text-gray-600 hover:bg-gray-100 mx-3 rounded-lg"
+          >
+            <span class="text-gray-600">
+              <layout-dashboard-icon size="18" />
             </span>
-
-            <p class="leading-1 flex ms-4 font-medium text-gray-600">Dashboard</p>
+            <p class="leading-1 flex ms-4 font-medium text-gray-600">Buscar</p>
           </li>
           <div class="path"></div>
         </div>
       </router-link>
       <router-link :to="{ name: 'convocatorias' }">
         <div class="relative mb-3 flex hover:cursor-pointer">
-          <li class="my-[3px] flex cursor-pointer items-center px-8">
-            <span class="font-medium text-gray-600">
-              <list-numbers-icon />
+          <!-- flex items-center w-full px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg -->
+          <li
+            class="flex w-full cursor-pointer px-4 py-1 text-gray-600 hover:bg-gray-100 mx-3 rounded-lg"
+          >
+            <span class="text-gray-600">
+              <search-icon size="18" />
             </span>
-            <p class="leading-1 flex ms-4 font-medium text-gray-600">Convocatorias</p>
+            <p class="leading-1 flex ms-4 font-medium text-gray-600">Convocatoria</p>
           </li>
           <div class="path"></div>
         </div>
       </router-link>
       <router-link :to="{ name: 'buscar' }">
         <div class="relative mb-3 flex hover:cursor-pointer">
-          <li class="my-[3px] flex cursor-pointer items-center px-8">
-            <span class="font-medium text-gray-600">
-              <search-icon />
+          <!-- flex items-center w-full px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg -->
+          <li
+            class="flex w-full cursor-pointer px-4 py-1 text-gray-600 hover:bg-gray-100 mx-3 rounded-lg"
+          >
+            <span class="text-gray-600">
+              <search-icon size="18" />
             </span>
             <p class="leading-1 flex ms-4 font-medium text-gray-600">Buscar</p>
           </li>
@@ -53,7 +61,20 @@
       </router-link>
     </ul>
 
-    <div class="flex justify-center"></div>
+    <div class="p-4 border-t">
+      <button
+        class="flex items-center w-full px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg"
+      >
+        <Settings class="h-5 w-5 mr-3" />
+        Settings
+      </button>
+      <button
+        class="flex items-center w-full px-4 py-2 mt-2 text-sm text-red-500 hover:bg-red-50 hover:text-red-600 rounded-lg"
+      >
+        <LogOut class="h-5 w-5 mr-3" />
+        Logout
+      </button>
+    </div>
   </div>
 </template>
 
@@ -62,6 +83,7 @@ defineProps({
   open: { type: Boolean, default: false },
   close: { type: Function, required: true }
 })
+import { Settings, LogOut } from 'lucide-vue-next'
 </script>
 
 <style lang="scss">

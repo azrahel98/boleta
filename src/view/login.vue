@@ -80,7 +80,7 @@ const login = async () => {
     if (!valid.success) {
       errores.value = valid.error.format()
     } else {
-      const data = await apiClient.post('/login', {
+      const data = await apiClient.post('/api/login', {
         nickname: form.username,
         password: form.password
       })
