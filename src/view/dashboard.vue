@@ -118,7 +118,7 @@
             </div>
           </nav>
 
-          <RouterView class="mt-10 mx-auto mb-auto p-2 md:pr-2"></RouterView>
+          <RouterView class="mx-auto mb-auto"></RouterView>
         </div>
       </main>
     </div>
@@ -182,7 +182,8 @@ window.addEventListener('resize', () => {
 .view {
   min-height: 100vh;
   display: grid;
-  grid-template-rows: 8vh auto;
+  grid-template-rows: 10vh auto;
+  row-gap: 1vh;
   align-items: start;
 }
 

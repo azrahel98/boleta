@@ -15,6 +15,7 @@ import { compareAsc } from 'date-fns'
 import Home from './view/dashboard/home.vue'
 import Buscar from './view/dashboard/buscar.vue'
 import Convocatoria from './view/dashboard/convocatoria.vue'
+import Perfil from './view/dashboard/perfil.vue'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -29,14 +30,19 @@ const routes: RouteRecordRaw[] = [
         component: Home
       },
       {
-        path: '/',
+        path: '/buscar',
         name: 'buscar',
         component: Buscar
       },
       {
-        path: '/',
+        path: '/convocatoria',
         name: 'convocatorias',
         component: Convocatoria
+      },
+      {
+        path: '/perfil/:dni',
+        name: 'perfil',
+        component: Perfil
       }
     ]
   },

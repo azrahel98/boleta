@@ -146,13 +146,9 @@ const mesString = (mes: number) => {
 }
 </script>
 <template>
-  <div class="mt-5 grid">
-    <Eventos
-      :eventos="actividades"
-      :cumples="cumples"
-      class="min-h-[80vh] max-h-[88vh] min-h-[80vh]"
-    />
-    <div class="card min-h-[80vh]">
+  <div class="grid">
+    <Eventos :eventos="actividades" :cumples="cumples" class="max-h-[89vh]" />
+    <div class="card min-h-[80vh] mt-2">
       <header class="relative flex flex-col items-start justify-center">
         <div class="flex w-full justify-between items-center align-middle place-items-center">
           <div class="mb-px mt-3 text-2xl font-bold text-navy-700 dark:text-white text-center">

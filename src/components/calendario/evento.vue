@@ -1,6 +1,6 @@
 <template>
-	<div class="card w-full !px-0">
-		<header class="relative flex  flex-col items-start justify-between pt-4 px-3">
+	<div class="card  w-full !px-0">
+		<header class="relative flex  flex-col items-start justify-between px-3">
 			<div class="mb-px mt-3 text-2xl font-bold text-navy-700 dark:text-white">Eventos</div>
 			<p class="text-start text-base font-dm text-sm text-gray-600 ">
 				Eventos programados
@@ -43,10 +43,13 @@
 </script>
 
 <style lang="scss" scoped>
+
 	.grid {
 		row-gap: 1vh;
 		height: 100%;
 		overflow-y: auto;
+
+		
 		.evento {
 			border-radius: 10px;
 			display: flex;
@@ -70,4 +73,5 @@
 			}
 		}
 	}
+	
 </style>
