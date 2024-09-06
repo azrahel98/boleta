@@ -22,7 +22,7 @@
   }
 
   p {
-    @apply font-bold text-navy-700;
+    @apply font-semibold text-navy-700;
   }
 
   span {
@@ -49,7 +49,7 @@
 }
 
 .input {
-  @apply rounded-full border border-gray-300 pl-4 pr-12 py-2 focus:outline-none focus:ring-2 focus:ring-lightPrimary focus:border-transparent;
+  @apply rounded-full border border-gray-300 pl-4 pr-12 py-2 focus:outline-none focus:ring-2 focus:ring-lightPrimary focus:border-transparent font-dm;
 }
 
 .titulo {

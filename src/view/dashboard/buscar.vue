@@ -1,8 +1,8 @@
 <template>
   <div class="w-full bg-gradient-to-br">
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex h-full items-center w-full justify-center">
-        <div class="flex items-center w-[20vw] xl:w-[15vw] sm:w-[40vw] rounded-full bg-white">
+      <div class="flex justify-center w-[40vw]">
+        <div class="flex items-center rounded-full bg-white border-gray-300 shadow-sm">
           <p class="pl-3 pr-2 text-xl">
             <search-icon class="icon icon-sm" />
           </p>
@@ -13,18 +13,20 @@
             @keyup.enter="realizarBusqueda"
             placeholder="Search..."
             autocomplete="off"
-            class="block h-full !w-full text-center py-4 rounded-full text-sm font-medium text-navy-700 outline-none placeholder:!text-gray-400 dark:bg-navy-900 dark:text-white dark:placeholder:!text-white sm:w-fit"
+            class="input !border-0 focus:ring-0 text-center"
           />
         </div>
       </div>
 
-      <h2 class="text-sm font-dm font-semibold mb-4">Trabajadores Encontrados</h2>
+      <h2 class="text-sm font-dm font-semibold mb-4 justify-self-start">
+        Trabajadores Encontrados
+      </h2>
 
       <div class="resultados">
         <div
           v-if="trabajadores.length > 0"
           v-for="trabajador in trabajadores"
-          class="bg-white rounded-lg shadow-md h-min overflow-hidden"
+          class="card rounded-lg shadow-md h-min overflow-hidden"
         >
           <div class="relative">
             <img
@@ -46,14 +48,10 @@
               >
                 {{ trabajador.activo ? 'Activo' : 'Inactivo' }}
               </span>
-              <!-- <button
-                class="px-4 py-1 text-xs bg-blueSecondary text-white rounded-full hover:bg-lightPrimary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-lightPrimary"
-              >
-                Ver Perfil
-              </button> -->
+
               <router-link :to="{ name: 'perfil', params: { dni: trabajador.dni.toString() } }">
                 <button
-                  class="px-4 py-1 text-xs bg-blueSecondary text-white rounded-full hover:bg-lightPrimary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-lightPrimary"
+                  class="px-4 py-1 text-xs rounded-full font-dm font-bold text-blueSecondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-lightPrimary"
                 >
                   Ver Perfil
                 </button>
@@ -115,7 +113,7 @@ main {
   height: 100%;
   justify-content: start;
   align-items: start;
-  justify-items: start;
+  justify-items: center;
   grid-row: 10vh 1vh 80vh;
   grid-template-columns: 1fr;
   .resultados {

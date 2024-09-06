@@ -16,7 +16,7 @@
       <!-- </div> -->
     </div>
     <div className="mt-[10px] mb-7 h-px bg-gray-300 dark:bg-white/30" />
-    <ul className="mb-auto pt-1 font-dm text-md">
+    <ul className="mb-auto pt-1 font-sans text-md">
       <router-link :to="{ name: 'dashboard' }">
         <div class="relative mb-3 flex hover:cursor-pointer">
           <!-- flex items-center w-full px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg -->
