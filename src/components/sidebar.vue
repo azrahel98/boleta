@@ -1,11 +1,7 @@
 <template>
-  <div
-    :class="open ? 'translate-x-0 left-9 sidebaropen' : '-translate-x-96 '"
-    class="sm:none min-w-[210px] duration-175 linear fixed !z-50 flex min-h-full flex-col bg-white pb-10 shadow-2xl shadow-white/5 transition-all dark:!bg-navy-800 dark:text-white md:!z-50 lg:!z-50 xl:!z-0"
-  >
-    <span
-      className="absolute top-4 right-4 block cursor-pointer xl:hidden font-medium text-gray-600"
-    >
+  <div :class="open ? 'translate-x-0 left-9 sidebaropen' : '-translate-x-96 '"
+    class="sm:none min-w-[230px] duration-175 linear fixed !z-50 flex min-h-full flex-col bg-white pb-10 shadow-2xl shadow-white/5 transition-all dark:!bg-navy-800 dark:text-white md:!z-50 lg:!z-50 xl:!z-0">
+    <span className="absolute top-4 right-4 block cursor-pointer xl:hidden font-medium text-gray-600">
       <x-icon @click="close()"></x-icon>
     </span>
     <div class="mt-[50px] flex items-center justify-center">
@@ -15,9 +11,14 @@
     <ul className="mb-auto pt-1 font-dm text-sm">
       <router-link :to="{ name: 'dashboard' }">
         <div class="relative mb-3 flex hover:cursor-pointer">
+<<<<<<< HEAD
           <li
             class="flex w-full cursor-pointer px-4 py-1 text-gray-600 hover:bg-gray-100 mx-3 rounded-lg"
           >
+=======
+          <!-- flex items-center w-full px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg -->
+          <li class="flex w-full cursor-pointer px-4 py-1 text-gray-600 hover:bg-gray-100 mx-3 rounded-lg">
+>>>>>>> 5f6f600c341c66883a3d84940f603fee35e42e54
             <span class="text-gray-600">
               <layout-dashboard-icon size="18" />
             </span>
@@ -29,9 +30,7 @@
       <router-link :to="{ name: 'convocatorias' }">
         <div class="relative mb-3 flex hover:cursor-pointer">
           <!-- flex items-center w-full px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg -->
-          <li
-            class="flex w-full cursor-pointer px-4 py-1 text-gray-600 hover:bg-gray-100 mx-3 rounded-lg"
-          >
+          <li class="flex w-full cursor-pointer px-4 py-1 text-gray-600 hover:bg-gray-100 mx-3 rounded-lg">
             <span class="text-gray-600">
               <search-icon size="18" />
             </span>
@@ -40,6 +39,7 @@
           <div class="path"></div>
         </div>
       </router-link>
+<<<<<<< HEAD
       <div
         class="relative mb-3 flex hover:cursor-pointer"
         v-if="router.currentRoute.value.name === 'perfil'"
@@ -61,6 +61,29 @@
       <button
         class="flex items-center w-full px-4 py-2 mt-2 text-sm text-red-500 hover:bg-red-50 hover:text-red-600 rounded-lg"
       >
+=======
+      <router-link :to="{ name: 'buscar' }">
+        <div class="relative mb-3 flex hover:cursor-pointer">
+          <!-- flex items-center w-full px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg -->
+          <li class="flex w-full cursor-pointer px-4 py-1 text-gray-600 hover:bg-gray-100 mx-3 rounded-lg">
+            <span class="text-gray-600">
+              <search-icon size="18" />
+            </span>
+            <p class="leading-1 flex ms-4 font-medium text-gray-600">Buscar</p>
+          </li>
+          <div class="path"></div>
+        </div>
+      </router-link>
+    </ul>
+
+    <div class="p-4 border-t">
+      <button class="flex items-center w-full px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg">
+        <Settings class="h-5 w-5 mr-3" />
+        Settings
+      </button>
+      <button
+        class="flex items-center w-full px-4 py-2 mt-2 text-sm text-red-500 hover:bg-red-50 hover:text-red-600 rounded-lg">
+>>>>>>> 5f6f600c341c66883a3d84940f603fee35e42e54
         <LogOut class="h-5 w-5 mr-3" />
         Logout
       </button>

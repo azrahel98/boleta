@@ -4,16 +4,14 @@
       <div class="bg-white perfil rounded-lg shadow overflow-hidden">
         <div class="h-32 bg-gradient-to-r from-purple-600 to-indigo-900"></div>
         <div class="relative px-4 pb-4">
-          <img
-            src="../../assets/man.svg"
-            class="h-28 w-28 avatar rounded-full object-contain border-4 bg-white border-lightPrimary shadow-md absolute left-[42%] -mt-12"
-          />
+          <img src="../../assets/man.svg"
+            class="h-28 w-28 avatar rounded-full object-contain border-4 bg-white border-lightPrimary shadow-md absolute left-[42%] -mt-12" />
 
           <div class="pt-16 font-dm">
             <h2 class="text-xl font-bold text-gray-800">{{ perfil.nombres }}</h2>
             <p class="text-gray-600">{{ perfil.dni }}</p>
             <div class="flex justify-between mt-4">
-              <div class="text-center">
+              <!-- <div class="text-center">
                 <span class="block text-2xl font-bold text-gray-800">{{ employee.posts }}</span>
                 <span class="text-md text-gray-600">Posts</span>
               </div>
@@ -24,7 +22,7 @@
               <div class="text-center">
                 <span class="block text-2xl font-bold text-gray-800">{{ employee.following }}</span>
                 <span class="text-md text-gray-600">Following</span>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
@@ -53,17 +51,9 @@
           Here you can find more details about your projects. Keep you user engaged by providing
           meaningful information.
         </p>
-        <div class="space-y-4">
-          <div
-            v-for="project in employee.projects"
-            :key="project.id"
-            class="flex items-center space-x-4"
-          >
-            <img
-              :src="project.image"
-              :alt="project.title"
-              class="w-16 h-16 rounded-lg object-cover"
-            />
+        <!-- <div class="space-y-4">
+          <div v-for="project in employee.projects" :key="project.id" class="flex items-center space-x-4">
+            <img :src="project.image" :alt="project.title" class="w-16 h-16 rounded-lg object-cover" />
             <div>
               <h4 class="font-semibold text-gray-800">{{ project.title }}</h4>
               <p class="text-sm text-gray-600">
@@ -72,7 +62,7 @@
               </p>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -84,7 +74,7 @@ import { apiClient } from '../../tools/axios'
 import { router } from '../../router'
 import { RouteLocationNormalizedLoadedGeneric } from 'vue-router'
 
-const perfil = ref({})
+const perfil = ref<any>({})
 
 onMounted(async () => {
   const res = await apiClient.post('/personal/dni', {
@@ -94,6 +84,7 @@ onMounted(async () => {
   perfil.value = res.data
 })
 
+<<<<<<< HEAD
 watch(router.currentRoute, async (x: RouteLocationNormalizedLoadedGeneric, _y) => {
   const res = await apiClient.post('/personal/dni', {
     dni: parseInt(x.params.dni.toString())
@@ -130,6 +121,9 @@ const employee = ref({
     }
   ]
 })
+=======
+
+>>>>>>> 5f6f600c341c66883a3d84940f603fee35e42e54
 </script>
 
 <style lang="scss" scoped>
@@ -141,6 +135,7 @@ const employee = ref({
   justify-content: space-between;
   grid-template-rows: 1fr;
   width: 100%;
+
   .perfil {
     grid-column: span 2;
   }
