@@ -19,53 +19,59 @@
                 </a>
               </div>
             </div>
-            <!-- Aqui -->
 
-            <div class="flex justify-items-center align-content-center items-center gap-3">
-              <div
-                v-if="router.currentRoute.value.name != 'buscar'"
-                class="relative mt-[3px] flex h-[61px] w-[355px] flex-grow items-center justify-between px-3 rounded-full bg-white px-0 py-2 shadow-xl shadow-shadow-500 dark:!bg-navy-800 dark:shadow-none md:w-[320px] md:flex-grow-0 md:gap-1 xl:w-[365px] xl:gap-2"
-              >
-                <div
-                  class="flex h-full items-center w-full rounded-full bg-lightPrimary text-navy-700 dark:bg-navy-900 dark:text-white xl:w-[225px]"
-                >
-                  <p class="pl-3 pr-2 text-xl">
-                    <search-icon class="icon icon-sm" />
-                  </p>
-                  <div class="dropdown dropdown-end">
-                    <input
-                      type="text"
-                      @keyup="buscar"
-                      v-model="search"
-                      placeholder="Search..."
-                      class="block h-full text-center w-full rounded-full bg-lightPrimary text-sm font-medium text-navy-700 outline-none placeholder:!text-gray-400 dark:bg-navy-900 dark:text-white dark:placeholder:!text-white sm:w-fit"
-                    />
-                    <div tabindex="1" class="dropdown-content personas shadow-lg bg-white shadow">
-                      <div
-                        v-for="x in personas"
-                        class="flex hover:bg-lightPrimary"
-                        @click="ruta(x.dni)"
-                      >
+            <div class="flex items-center gap-3 bg-white rounded-full px-2">
+              <div class="flex h-full items-center w-full rounded-full bg-lightPrimary">
+                <p class="pl-3 pr-2 text-xl">
+                  <search-icon size="20" />
+                </p>
+                <div class="dropdown dropdown-end">
+                  <input
+                    type="text"
+                    @keyup="buscar"
+                    v-model="search"
+                    placeholder="Search..."
+                    autocomplete="off"
+                    class="text-start w-full h-[4vh] rounded-full bg-lightPrimary text-sm font-medium text-navy-700 outline-none placeholder:!text-gray-400 dark:bg-navy-900 dark:text-white dark:placeholder:!text-white sm:w-fit"
+                  />
+                  <div
+                    tabindex="1"
+                    class="dropdown-content !w-[20vw] absolute personas shadow-lg bg-white shadow"
+                  >
+                    <div
+                      v-for="x in personas"
+                      class="flex hover:bg-lightPrimary"
+                      @click="ruta(x.dni)"
+                    >
+                      <img v-if="x.sexo == 'M'" src="../assets/mann.svg" class="imagen" />
+                      <img v-else src="../assets/mujer.svg" class="imagen" />
+                      <h1>{{ x.nombres }}</h1>
+                    </div>
+                    <!-- <RouterLink
+                      v-for="x in personas"
+                      :to="{ name: 'perfil', params: { dni: x.dni.toString() } }"
+                    >
+                      <div class="flex hover:bg-lightPrimary">
                         <img v-if="x.sexo == 'M'" src="../assets/mann.svg" class="imagen" />
                         <img v-else src="../assets/mujer.svg" class="imagen" />
                         <h1>{{ x.nombres }}</h1>
                       </div>
-                    </div>
+                    </RouterLink> -->
                   </div>
                 </div>
-
-                <span
-                  className="flex cursor-pointer mr-1 text-xl text-gray-600 dark:text-white xl:hidden"
-                >
-                  <menu-icon
-                    class="h-5 w-5"
-                    v-if="!sibar.abrir"
-                    @click="() => ((sibar.abrir = true), (sibar.opacity = true))"
-                  />
-                  <x-icon class="h-5 w-5" v-else @click="close" />
-                </span>
               </div>
-              <div class="relative flex dropdown dropdown-end">
+
+              <span
+                className="flex cursor-pointer mr-1 text-xl text-gray-600 dark:text-white xl:hidden"
+              >
+                <menu-icon
+                  class="h-5 w-5"
+                  v-if="!sibar.abrir"
+                  @click="() => ((sibar.abrir = true), (sibar.opacity = true))"
+                />
+                <x-icon class="h-5 w-5" v-else @click="close" />
+              </span>
+              <div class="relative flex dropdown dropdown-end py-1">
                 <div class="flex">
                   <img
                     tabindex="0"
@@ -127,10 +133,10 @@
 
 <script setup lang="ts">
 import sidebar from '../components/sidebar.vue'
-// import { invoke } from '@tauri-apps/api'
 import { ref } from 'vue'
 import { RouterView } from 'vue-router'
 import { router } from '../router'
+import { apiClient } from '../tools/axios'
 
 const sibar = ref({
   abrir: true,
@@ -154,8 +160,11 @@ const buscar = async () => {
   try {
     if (search.value.length > 3) {
       personas.value = []
-      //   const datos = (await invoke('buscar_trabajadores', { nombres: search.value })) as Array<any>
-      //   personas.value = datos
+
+      const datos = await apiClient.post('/personal/buscar', {
+        nombre: search.value
+      })
+      personas.value = datos.data
     }
   } catch (error) {
     console.log(error)
@@ -166,7 +175,7 @@ const ruta = (dni: string) => {
   personas.value = []
   search.value = ''
 
-  router.replace({ name: 'trabajador', params: { dni } })
+  router.replace({ name: 'perfil', params: { dni } })
 }
 
 window.addEventListener('resize', () => {

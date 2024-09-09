@@ -79,15 +79,24 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { apiClient } from '../../tools/axios'
 import { router } from '../../router'
+import { RouteLocationNormalizedLoadedGeneric } from 'vue-router'
 
 const perfil = ref({})
 
 onMounted(async () => {
   const res = await apiClient.post('/personal/dni', {
     dni: parseInt(router.currentRoute.value.params.dni.toString())
+  })
+
+  perfil.value = res.data
+})
+
+watch(router.currentRoute, async (x: RouteLocationNormalizedLoadedGeneric, _y) => {
+  const res = await apiClient.post('/personal/dni', {
+    dni: parseInt(x.params.dni.toString())
   })
 
   perfil.value = res.data
