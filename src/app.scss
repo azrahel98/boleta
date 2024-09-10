@@ -41,7 +41,7 @@
 }
 
 .button {
-  @apply bg-lightPrimary hover:bg-blueSecondary hover:text-white text-navy-700  font-bold py-2   rounded;
+  @apply bg-lightPrimary hover:bg-blueSecondary hover:text-white text-navy-700  font-bold py-2 rounded ring-0 outline-none;
 }
 
 .dot {
@@ -49,7 +49,7 @@
 }
 
 .input {
-  @apply rounded-full border border-gray-300 pl-4 pr-12 py-2 focus:outline-none focus:ring-2 focus:ring-lightPrimary focus:border-transparent font-dm;
+  @apply rounded-full border border-gray-300 pl-4 disabled:border-gray-300 font-dm text-sm disabled:bg-lightPrimary pr-12 py-2 focus:outline-none focus:ring-2 focus:ring-lightPrimary focus:border-transparent font-dm;
 }
 
 .titulo {

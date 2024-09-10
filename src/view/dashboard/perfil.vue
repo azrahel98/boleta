@@ -4,21 +4,20 @@
       <div class="bg-white perfil rounded-lg shadow overflow-hidden">
         <div class="h-24 bg-gradient-to-r from-purple-600 to-indigo-900"></div>
         <div class="relative px-4 pb-4">
-          <img src="../../assets/man.svg"
-            class="h-28 w-28 avatar rounded-full object-contain border-4 bg-white border-lightPrimary shadow-md absolute left-[42%] -mt-12" />
+          <img
+            src="../../assets/man.svg"
+            class="h-28 w-28 avatar rounded-full object-contain border-4 bg-white border-lightPrimary shadow-md absolute left-[42%] -mt-12"
+          />
 
-          <div class="pt-16 font-dm">
+          <div class="pt-20 font-dm flex flex-col text-center">
             <h2 class="text-xl font-bold text-gray-800">{{ perfil.nombres }}</h2>
             <p class="text-gray-600">{{ perfil.dni }}</p>
-            <div class="flex justify-between mt-4">
-
-            </div>
           </div>
         </div>
       </div>
 
-      <div class="bg-white rounded-lg shadow p-6">
-        <h3 class="text-lg font-semibold text-gray-800 mb-2">Personal</h3>
+      <div class="card">
+        <h3 class="text-lg font-semibold text-gray-800 mb-2 mt-3">Personal</h3>
         <ul class="font-sans text-sm flex flex-col justify-start gap-3 pb-6 h-full">
           <li v-if="perfil.direccion" class="flex gap-3">
             <current-location-icon /> {{ perfil.direccion }}
@@ -33,16 +32,18 @@
             <building-bank-icon />{{ perfil.pension }}
           </li>
         </ul>
+        <div class="flex items-center justify-center">
+          <button
+            class="button mb-2 text-center !w-50p text-sm !font-dm !font-semibold"
+            onclick="my_modal_5.showModal()"
+          >
+            Editar
+          </button>
+        </div>
       </div>
+      <modal :perfil="perfil" />
 
-      <div class="bg-white rounded-lg shadow p-6 col-span-full">
-        <h3 class="text-lg font-semibold text-gray-800 mb-2">All projects</h3>
-        <p class="text-gray-600 mb-4">
-          Here you can find more details about your projects. Keep you user engaged by providing
-          meaningful information.
-        </p>
-
-      </div>
+      <div class="card rounded-md col-span-full"></div>
     </div>
   </div>
 </template>
@@ -51,6 +52,7 @@
 import { onMounted, ref, watch } from 'vue'
 import { apiClient } from '../../tools/axios'
 import { router } from '../../router'
+import modal from '../../components/perfil/modal.vue'
 import { RouteLocationNormalizedLoadedGeneric } from 'vue-router'
 
 const perfil = ref<any>({})
@@ -70,7 +72,6 @@ watch(router.currentRoute, async (x: RouteLocationNormalizedLoadedGeneric, _y) =
 
   perfil.value = res.data
 })
-
 </script>
 
 <style lang="scss" scoped>
@@ -86,8 +87,6 @@ watch(router.currentRoute, async (x: RouteLocationNormalizedLoadedGeneric, _y) =
     justify-content: space-evenly;
     grid-template-rows: 1fr;
     width: 100%;
-
-
   }
 }
 </style>
