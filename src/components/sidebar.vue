@@ -1,7 +1,7 @@
 <template>
   <div
     :class="open ? 'translate-x-0 left-9 sidebaropen' : '-translate-x-96 '"
-    class="sm:none min-w-[230px] duration-175 linear fixed !z-50 flex min-h-full flex-col bg-white pb-10 shadow-2xl shadow-white/5 transition-all dark:!bg-navy-800 dark:text-white md:!z-50 lg:!z-50 xl:!z-0"
+    class="sm:none min-w-[230px] duration-175 linear fixed pb-10 !z-50 flex min-h-full flex-col bg-white shadow-2xl shadow-white/5 transition-all dark:!bg-navy-800 dark:text-white md:!z-50 lg:!z-50 xl:!z-0"
   >
     <span
       className="absolute top-4 right-4 block cursor-pointer xl:hidden font-medium text-gray-600"
@@ -28,7 +28,6 @@
       </router-link>
       <router-link :to="{ name: 'convocatorias' }">
         <div class="relative mb-3 flex hover:cursor-pointer">
-          <!-- flex items-center w-full px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg -->
           <li
             class="flex w-full cursor-pointer px-4 py-1 text-gray-600 hover:bg-gray-100 mx-3 rounded-lg"
           >
@@ -42,19 +41,18 @@
       </router-link>
     </ul>
 
-    <div class="p-4 border-t">
-      <button
-        class="flex items-center w-full px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg"
-      >
-        <Settings class="h-5 w-5 mr-3" />
-        Settings
-      </button>
-      <button
-        class="flex items-center w-full px-4 py-2 mt-2 text-sm text-red-500 hover:bg-red-50 hover:text-red-600 rounded-lg"
-      >
-        <LogOut class="h-5 w-5 mr-3" />
-        Logout
-      </button>
+    <div class="flex justify-around pt-3 max-w-[17vw]">
+      <div class="avatar">
+        <div class="w-14 rounded-full">
+          <img
+            src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+            alt="Tailwind-CSS-Avatar-component"
+          />
+        </div>
+      </div>
+      <div class="flex flex-col justify-center">
+        <p class="font-medium text-md font-dm">{{ store.nombre }}</p>
+      </div>
     </div>
   </div>
 </template>
@@ -64,7 +62,10 @@ defineProps({
   open: { type: Boolean, default: false },
   close: { type: Function, required: true }
 })
+import { userStore } from '@store/user'
 import { LogOut } from 'lucide-vue-next'
+
+const store = userStore()
 </script>
 
 <style lang="scss">
