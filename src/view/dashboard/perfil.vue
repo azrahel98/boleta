@@ -4,10 +4,8 @@
       <div class="bg-white perfil rounded-lg shadow overflow-hidden">
         <div class="h-24 bg-gradient-to-r from-purple-600 to-indigo-900"></div>
         <div class="relative px-4 pb-4">
-          <img
-            src="../../assets/man.svg"
-            class="h-28 w-28 avatar rounded-full object-contain border-4 bg-white border-lightPrimary shadow-md absolute left-[42%] -mt-12"
-          />
+          <img src="../../assets/man.svg"
+            class="h-28 w-28 avatar rounded-full object-contain border-4 bg-white border-lightPrimary shadow-md absolute left-[42%] -mt-12" />
 
           <div class="pt-20 font-dm flex flex-col text-center">
             <h2 class="text-xl font-bold text-gray-800">{{ perfil.nombres }}</h2>
@@ -17,7 +15,13 @@
       </div>
 
       <div class="card">
-        <h3 class="text-lg font-semibold text-gray-800 mb-2 mt-3">Personal</h3>
+        <div class="flex w-full justify-between">
+          <h3 class="text-lg font-semibold text-gray-800 mb-2 mt-3">Personal</h3>
+          <div class="flex items-center justify-center">
+
+            <edit-icon class="button" onclick="my_modal_5.showModal()" size="35" />
+          </div>
+        </div>
         <ul class="font-sans text-sm flex flex-col justify-start gap-3 pb-6 h-full">
           <li v-if="perfil.direccion" class="flex gap-3">
             <current-location-icon /> {{ perfil.direccion }}
@@ -32,14 +36,7 @@
             <building-bank-icon />{{ perfil.pension }}
           </li>
         </ul>
-        <div class="flex items-center justify-center">
-          <button
-            class="button mb-2 text-center !w-50p text-sm !font-dm !font-semibold"
-            onclick="my_modal_5.showModal()"
-          >
-            Editar
-          </button>
-        </div>
+
       </div>
       <modal :perfil="perfil" />
 
