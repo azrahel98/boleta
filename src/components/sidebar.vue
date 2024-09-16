@@ -15,26 +15,22 @@
     <ul className="mb-auto pt-1 font-dm text-sm">
       <router-link :to="{ name: 'dashboard' }">
         <div class="relative mb-3 flex hover:cursor-pointer">
-          <li
-            class="flex w-full cursor-pointer px-4 py-1 text-gray-600 hover:bg-gray-100 mx-3 rounded-lg"
-          >
+          <li class="flex w-full cursor-pointer text-gray-600">
             <span class="text-gray-600">
               <layout-dashboard-icon size="18" />
             </span>
-            <p class="leading-1 flex ms-4 font-medium text-gray-600">Inicio</p>
+            <p class="leading-1 flex ms-4 titulo">Inicio</p>
           </li>
           <div class="path"></div>
         </div>
       </router-link>
       <router-link :to="{ name: 'convocatorias' }">
         <div class="relative mb-3 flex hover:cursor-pointer">
-          <li
-            class="flex w-full cursor-pointer px-4 py-1 text-gray-600 hover:bg-gray-100 mx-3 rounded-lg"
-          >
+          <li class="flex w-full cursor-pointer text-gray-600">
             <span class="text-gray-600">
               <search-icon size="18" />
             </span>
-            <p class="leading-1 flex ms-4 font-medium text-gray-600">Convocatoria</p>
+            <p class="flex ms-4 titulo">Convocatoria</p>
           </li>
           <div class="path"></div>
         </div>
@@ -43,7 +39,7 @@
 
     <div class="flex justify-around pt-3 max-w-[17vw]">
       <div class="avatar">
-        <div class="w-14 rounded-full">
+        <div class="w-12 rounded-full">
           <img
             src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
             alt="Tailwind-CSS-Avatar-component"
@@ -63,7 +59,6 @@ defineProps({
   close: { type: Function, required: true }
 })
 import { userStore } from '@store/user'
-import { LogOut } from 'lucide-vue-next'
 
 const store = userStore()
 </script>
@@ -72,5 +67,17 @@ const store = userStore()
 .sidebaropen {
   border-radius: 15px;
   margin-top: 1.5vh;
+}
+
+li {
+  border-radius: 50px;
+
+  padding: 1.1vh;
+}
+li:hover {
+  border-radius: 0px;
+  padding-right: 0;
+
+  background-color: #f4f7fe;
 }
 </style>

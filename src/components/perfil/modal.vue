@@ -7,8 +7,15 @@
           <div class="flex justify-center mb-4">
             <div class="w-24 h-24 rounded-full overflow-hidden">
               <img
+                v-if="imagePreview !== undefined"
                 alt="Profile"
-                :src="image_preview"
+                :src="imagePreview"
+                class="w-full h-full object-cover mask mask-circle"
+              />
+              <img
+                v-else
+                alt="Profile"
+                :src="`data:image/png;base64,${perfil.imagen}`"
                 class="w-full h-full object-cover mask mask-circle"
               />
             </div>
@@ -17,7 +24,12 @@
             <label for="picture" class="block text-sm font-medium text-gray-700"
               >Foto de Perfil</label
             >
-            <input id="picture" type="file" accept="image/*" @change="subir" class="py-1 text-sm" />
+            <input
+              type="file"
+              @change="(e) => handleFileChange(e, perfil.dni)"
+              accept="image/*"
+              class="py-1 text-sm"
+            />
           </div>
           <div>
             <label for="name" class="block text-sm font-medium text-gray-700">Nombres</label>
@@ -56,7 +68,15 @@
               v-model="perfil.correo"
             />
           </div>
-
+          <div>
+            <label for="Ruc" class="block text-sm font-medium text-gray-700">Ruc</label>
+            <input
+              id="Ruc"
+              type="number"
+              v-model="perfil.ruc"
+              class="input !rounded-btn !p-1 h-min w-full"
+            />
+          </div>
           <div>
             <label for="birthDate" class="block text-sm font-medium text-gray-700"
               >Cumpleaños</label
@@ -76,8 +96,9 @@
               Cancel
             </button>
             <button
-              type="submit"
-              class="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700"
+              type="button"
+              @click="datos(perfil)"
+              class="px-4 py-2 bg-blueSecondary text-white rounded hover:bg-brandLinear"
             >
               Save changes
             </button>
@@ -90,20 +111,55 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
+import { apiClient } from '../../tools/axios'
 
 defineProps({
   perfil: { type: Object, required: true }
 })
 
-const image_preview = ref<undefined | string>(undefined)
-const subir = async (e: any) => {
+const datos = async (x: any) => {
   try {
-    const formData = new FormData()
-    formData.append('file', e.target.files[0])
-
-    image_preview.value = URL.createObjectURL(e.target.files[0])
+    const data = await apiClient.post('/personal/actualizar', {
+      direccion: x.direccion,
+      telefono: x.telefono,
+      correo: x.correo,
+      ruc: x.ruc,
+      nacimiento: x.nacimiento,
+      dni: x.dni
+    })
+    console.log(data.data)
   } catch (error) {
     console.log(error)
+  }
+}
+
+const file = ref<File | null>(null)
+const imagePreview = ref<string | undefined>(undefined)
+
+const handleFileChange = (e: Event, dni: any) => {
+  const target = e.target as HTMLInputElement
+  if (target.files && target.files.length > 0) {
+    file.value = target.files[0]
+    imagePreview.value = URL.createObjectURL(file.value)
+  }
+  uploadData(dni)
+}
+
+const uploadData = async (dni: any) => {
+  try {
+    const formData = new FormData()
+    formData.append('file', file.value!)
+    formData.append('dni', dni)
+
+    await apiClient.post('/personal/upload', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+
+    console.log('Imagen y datos subidos con éxito')
+  } catch (error) {
+    console.error('Error al subir los datos:', error)
   }
 }
 </script>
