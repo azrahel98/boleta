@@ -5,6 +5,6 @@ import { router } from './router'
 import { createPinia } from 'pinia'
 import VueTablerIcons from 'vue-tabler-icons'
 
-import './app.scss'
+import './custom.scss'
 
 createApp(App).use(router).use(VueTablerIcons).use(createPinia()).mount('#app')
