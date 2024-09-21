@@ -56,62 +56,39 @@
           <div class="card border border-light-subtle rounded-3 shadow-sm">
             <div class="card-body p-3 p-md-4 p-xl-5">
               <h2 class="fs-2 fw-bold text-start mb-4">Sign In</h2>
-              <span class="text-secondary">Enter your email and password to sign in!</span>
+              <span class="text-secondary">Ingresa su usuario y contraseña</span>
 
-              <form action="" class="pt-5">
+              <form class="pt-5" @submit.prevent="login">
                 <div class="row gy-2 overflow-hidden">
                   <div class="col-12">
                     <div class="d-flex gap-1">
                       <label for="mail" class="form-label fw-medium">Correo </label>
                       <div class="text-primary">*</div>
                     </div>
-                    <input
-                      type="email"
-                      class="form-control"
-                      id="mail"
-                      placeholder="name@example.com"
-                    />
+                    <input type="text" class="form-control" :class="{ 'is-invalid': errores?.username != null }"
+                      v-model="form.username" id="mail" placeholder="rscl" required autocomplete="off" />
+                    <div v-if="errores?.username" class="text-danger">
+                      <span v-for="er in errores.username?._errors">{{ er }}</span>
+                    </div>
                   </div>
                   <div class="col-12 mt-4">
-                    <div class="d-flex gap-1">
+                    <div class="d-flex gap-1 ">
                       <label for="mail" class="form-label fw-medium">Contraseña </label>
                       <div class="text-primary">*</div>
                     </div>
-                    <input
-                      type="email"
-                      class="form-control"
-                      id="mail"
-                      placeholder="name@example.com"
-                    />
-                  </div>
-                  <div class="col-12">
-                    <div class="d-flex gap-2 justify-content-between">
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          value=""
-                          name="rememberMe"
-                          id="rememberMe"
-                        />
-                        <label class="form-check-label text-secondary" for="rememberMe">
-                          Keep me logged in
-                        </label>
-                      </div>
-                      <a href="#!" class="link-primary text-decoration-none">Forgot password?</a>
+                    <input type="password" :class="{ 'is-invalid': errores?.password != null }" v-model="form.password"
+                      required class="form-control" id="mail" placeholder="name@example.com" autocomplete="off" />
+                    <div v-if="errores?.password" class="text-danger">
+                      <span v-for="er in errores.password?._errors">{{ er }}</span>
                     </div>
                   </div>
+
                   <div class="col-12">
                     <div class="d-grid my-3">
                       <button class="btn btn-primary btn-lg" type="submit">Log in</button>
                     </div>
                   </div>
-                  <div class="col-12">
-                    <p class="m-0 text-secondary text-center">
-                      Don't have an account?
-                      <a href="#!" class="link-primary text-decoration-none">Sign up</a>
-                    </p>
-                  </div>
+
                 </div>
               </form>
             </div>
@@ -137,6 +114,7 @@ const formSchema = z.object({
   username: z.string().min(1, { message: 'No debe ser vacio' }),
   password: z.string().min(1, { message: 'No debe ser vacio' })
 })
+
 
 type formSchemaType = z.infer<typeof formSchema>
 const errores = ref<z.ZodFormattedError<formSchemaType> | null>(null)

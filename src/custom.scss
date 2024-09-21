@@ -9,6 +9,7 @@ $danger: #ff4136;
 $light: #e5e5e5;
 $font-family-base: 'DM Sans', system-ui;
 $secondary: #a3aed0;
+$border-input:#E0E5F2;
 
 .text-secondary {
   color: $secondary !important;
@@ -19,6 +20,16 @@ $secondary: #a3aed0;
 .label {
   font-size: 0.875rem;
 }
+
+
+// .form-control{
+//   border-radius: 16px;
+//   border: solid 1px $border-input;
+// }
+// :focus{
+//   box-shadow: none !important;
+// }
+
 
 $theme-colors: (
   'primary': $primary,
