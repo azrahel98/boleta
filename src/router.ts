@@ -7,7 +7,6 @@ import {
 } from 'vue-router'
 
 import login from './view/login.vue'
-//@ts-ignore
 import dashboard from './view/dashboard.vue'
 import { userStore } from '@store/user'
 import { jwtDecode } from 'jwt-decode'
@@ -49,6 +48,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/login',
     name: 'login',
+    beforeEnter: (to, from, next) => loginmid(to, from, next),
     component: login
   }
 ]
@@ -78,9 +78,24 @@ const middleware = async (
   }
 }
 
+const loginmid = async (
+  _to: RouteLocationNormalized,
+  _from: RouteLocationNormalized,
+  next: NavigationGuardNext
+) => {
+  const token = localStorage.getItem('jwt')
+  if (token != null) {
+    return next({
+      name: 'dashboard'
+    })
+  }
+
+  return next()
+}
+
 export const router = createRouter({
   history: createWebHistory(),
   routes,
-  linkExactActiveClass: 'currentlink',
+  linkExactActiveClass: 'active',
   linkActiveClass: 'currentlink'
 })

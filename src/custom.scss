@@ -1,16 +1,36 @@
-@import '../node_modules/bootstrap/scss/functions';
-@import '../node_modules/bootstrap/scss/variables';
-@import '../node_modules/bootstrap/scss/maps';
-@import '../node_modules/bootstrap/scss/mixins';
-@import '../node_modules/bootstrap/scss/root';
+// Importar funciones y variables de Bootstrap
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
 
+// Tus personalizaciones
 $primary: #4318ff;
 $danger: #ff4136;
-$light: #e5e5e5;
-$font-family-base: 'DM Sans', system-ui;
+$light: #f4f7fe;
 $secondary: #a3aed0;
-$border-input:#E0E5F2;
+$border-input: #e0e5f2;
+$info: #3965ff;
 
+$font-family-base: 'DM Sans', system-ui;
+
+// Actualizar el mapa de colores del tema
+$theme-colors: map-merge(
+  $theme-colors,
+  (
+    'primary': $primary,
+    'danger': $danger,
+    'light': $light,
+    'info': $info,
+    'secondary': $secondary
+  )
+);
+
+// Configuraciones personalizadas adicionales
+$input-border-color: $border-input;
+
+// Importar todo Bootstrap
+@import 'bootstrap/scss/bootstrap';
+
+// Tus estilos personalizados adicionales
 .text-secondary {
   color: $secondary !important;
   font-weight: 400;
@@ -21,29 +41,79 @@ $border-input:#E0E5F2;
   font-size: 0.875rem;
 }
 
-
-// .form-control{
-//   border-radius: 16px;
-//   border: solid 1px $border-input;
-// }
-// :focus{
-//   box-shadow: none !important;
-// }
-
-
-$theme-colors: (
-  'primary': $primary,
-  'dange': $danger,
-  'success': $success,
-  'info': $info,
-  'warning': $warning,
-  'light': $light,
-  'dark': $dark
-);
-
-:root {
-  --bs-secondary-rgb: $bs-secondary-rgb;
+.text-danger {
+  font-size: 0.75rem;
+  font-weight: 500;
+  transition: font-size 2s linear;
 }
 
-@import '../node_modules/bootstrap/scss/type';
-@import '../node_modules/bootstrap/scss/bootstrap';
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  padding: 8px;
+  overflow: hidden;
+  background-color: $light;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.avatar-sm {
+  width: 32px;
+  height: 32px;
+  font-size: 0.875rem;
+}
+
+.avatar-md {
+  width: 48px;
+  height: 48px;
+  font-size: 1.25rem;
+}
+
+.avatar-lg {
+  width: 64px;
+  height: 64px;
+  font-size: 1.5rem;
+}
+
+.initials {
+  font-weight: bold;
+}
+
+.active {
+  border-right: 5px solid $primary;
+
+  p {
+    color: #2b3674 !important;
+    font-weight: bold !important;
+  }
+  .text-secondary {
+    color: #2b3674 !important;
+  }
+}
+.dropdown-menu {
+  overflow: hidden !important;
+}
+.dropdown-item {
+  width: 100%;
+  font-size: 14px;
+  font-weight: 400;
+}
+.dropdown-item:hover {
+  background-color: $light;
+}
+
+p,
+h1,
+span,
+h2 {
+  padding: 0;
+  margin: 0;
+}
+a {
+  text-decoration: none;
+}
+// Asegúrate de que las variables personalizadas estén disponibles como variables CSS
+:root {
+  --bs-secondary-rgb: #{to-rgb($secondary)};
+}

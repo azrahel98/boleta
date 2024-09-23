@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<!-- <script setup lang="ts">
 import { addMonths, getDate, getDay, getDaysInMonth, getMonth, getYear, subMonths } from 'date-fns'
 import { onMounted, ref } from 'vue'
 import DiaCalendar from '@com/calendario/dia.vue'
@@ -239,4 +239,8 @@ const mesString = (mes: number) => {
 }
 </style>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped></style> -->
+
+<template>
+  <p>dash</p>
+</template>

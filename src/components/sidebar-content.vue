@@ -1,0 +1,109 @@
+<template>
+  <div class="col-xl-3 col-xxl-2">
+    <div class="sidebar">
+      <div class="s-1 flex-column">
+        <div class="title">
+          <h1>Munives</h1>
+        </div>
+        <hr class="solid pb-4" />
+
+        <router-link :to="{ name: 'dashboard' }" class="d-flex">
+          <IconHomeFilled size="22" class="text-secondary" />
+          <p class="text-secondary">Dashboard</p>
+        </router-link>
+        <router-link :to="{ name: 'convocatorias' }" class="d-flex">
+          <IconListDetails size="22" class="text-secondary" />
+          <p class="text-secondary">Convocatorias</p>
+        </router-link>
+      </div>
+
+      <div class="user">
+        <div class="avatar avatar-md">
+          <img src="../assets/logo.png" class="img-fluid rounded-circle" />
+        </div>
+        <div class="d-flex flex-column">
+          <p>Raul Chercca</p>
+          <p>Administrador</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { IconHomeFilled, IconListDetails } from '@tabler/icons-vue'
+
+defineProps({
+  open: { type: Boolean, required: true }
+})
+</script>
+<style lang="scss" scoped>
+.side {
+  width: 100%;
+}
+.sidebar {
+  display: grid;
+  grid-template-rows: auto 10vh;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  overflow-y: auto;
+  width: 220px;
+  transition: max-width 2.5 linear !important;
+  @media only screen and (max-width: 1200px) {
+    .side {
+      display: none !important;
+    }
+  }
+
+  .s-1 {
+    display: flex;
+    height: min-content;
+
+    h1 {
+      color: #2b3674;
+      text-align: center;
+      font-size: 2.3rem;
+      padding-top: 4vh;
+      padding-bottom: 3vh;
+      font-weight: bolder;
+      letter-spacing: 2px;
+    }
+    .d-flex {
+      //top,rigth,bottom,left
+      padding: 1vh 0 1vh 1.8vw;
+      margin: 0;
+      align-items: center;
+      height: min-content;
+      gap: 0.5vw;
+      border-radius: 5px;
+      p {
+        padding: 0;
+        margin: 0;
+        font-size: 1rem;
+        font-weight: 500;
+        text-align: center;
+        vertical-align: middle;
+      }
+    }
+  }
+
+  .user {
+    display: flex;
+    justify-content: center;
+    height: min-content;
+    gap: 0.5vw;
+
+    p:first-of-type {
+      color: rgb(27, 37, 75);
+      font-weight: 700;
+      font-size: 16px;
+    }
+    p:last-of-type {
+      font-weight: 400;
+      font-size: 14px;
+      color: rgb(163, 174, 208);
+    }
+  }
+}
+</style>

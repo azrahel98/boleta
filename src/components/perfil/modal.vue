@@ -1,117 +1,128 @@
 <template>
-  <dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
-    <div class="modal-box">
-      <div class="bg-white rounded-lg p-6 w-full max-w-md">
-        <h2 class="text-2xl font-bold mb-4">Editar Perfil</h2>
-        <form class="space-y-4">
-          <div class="flex justify-center mb-4">
-            <div class="w-24 h-24 rounded-full overflow-hidden">
-              <img
-                v-if="imagePreview !== undefined"
-                alt="Profile"
-                :src="imagePreview"
-                class="w-full h-full object-cover mask mask-circle"
-              />
-              <img
-                v-else
-                alt="Profile"
-                :src="`data:image/png;base64,${perfil.imagen}`"
-                class="w-full h-full object-cover mask mask-circle"
+  <div
+    class="modal fade"
+    id="editProfileModal"
+    tabindex="-1"
+    aria-labelledby="editProfileModal"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editProfileModalLabel">Editar Perfil</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form @submit.prevent="datos(perfil)" class="needs-validation" novalidate>
+            <div class="text-center mb-4">
+              <div class="position-relative d-inline-block">
+                <img
+                  v-if="imagePreview !== undefined"
+                  alt="Profile"
+                  :src="imagePreview"
+                  class="rounded-circle"
+                  style="width: 100px; height: 100px; object-fit: cover"
+                />
+                <img
+                  v-else
+                  alt="Profile"
+                  :src="`data:image/png;base64,${perfil.imagen}`"
+                  class="rounded-circle"
+                  style="width: 100px; height: 100px; object-fit: cover"
+                />
+                <label
+                  for="profilePicture"
+                  class="position-absolute bottom-0 end-0 bg-light rounded-circle p-1 cursor-pointer"
+                >
+                  <IconCamera size="24" />
+                  <input
+                    id="profilePicture"
+                    type="file"
+                    @change="(e) => handleFileChange(e, perfil.dni)"
+                    accept="image/*"
+                    class="d-none"
+                  />
+                </label>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="name" class="form-label">Nombres</label>
+              <input id="name" type="text" class="form-control" :value="perfil.nombres" disabled />
+            </div>
+
+            <div class="mb-3">
+              <label for="direccion" class="form-label">Dirección</label>
+              <input
+                id="direccion"
+                type="text"
+                class="form-control"
+                v-model="perfil.direccion"
+                required
               />
             </div>
-          </div>
-          <div>
-            <label for="picture" class="block text-sm font-medium text-gray-700"
-              >Foto de Perfil</label
-            >
-            <input
-              type="file"
-              @change="(e) => handleFileChange(e, perfil.dni)"
-              accept="image/*"
-              class="py-1 text-sm"
-            />
-          </div>
-          <div>
-            <label for="name" class="block text-sm font-medium text-gray-700">Nombres</label>
-            <input
-              id="name"
-              type="text"
-              class="input !rounded-btn !p-1 h-min w-full"
-              :value="perfil.nombres"
-              disabled
-            />
-          </div>
-          <div>
-            <label for="id" class="block text-sm font-medium text-gray-700">Direccion</label>
-            <input
-              id="id"
-              type="text"
-              class="input !rounded-btn !p-1 h-min w-full"
-              v-model="perfil.direccion"
-            />
-          </div>
-          <div>
-            <label for="id" class="block text-sm font-medium text-gray-700">Telefono</label>
-            <input
-              id="id"
-              type="tel"
-              class="input !rounded-btn !p-1 h-min w-full"
-              v-model="perfil.telefono"
-            />
-          </div>
-          <div>
-            <label for="id" class="block text-sm font-medium text-gray-700">Email</label>
-            <input
-              id="id"
-              type="text"
-              class="input !rounded-btn !p-1 h-min w-70p"
-              v-model="perfil.correo"
-            />
-          </div>
-          <div>
-            <label for="Ruc" class="block text-sm font-medium text-gray-700">Ruc</label>
-            <input
-              id="Ruc"
-              type="number"
-              v-model="perfil.ruc"
-              class="input !rounded-btn !p-1 h-min w-full"
-            />
-          </div>
-          <div>
-            <label for="birthDate" class="block text-sm font-medium text-gray-700"
-              >Cumpleaños</label
-            >
-            <input
-              id="birthDate"
-              type="date"
-              v-model="perfil.nacimiento"
-              class="input !rounded-btn !p-1 h-min w-full"
-            />
-          </div>
-          <div class="flex justify-end space-x-2">
-            <button
-              type="button"
-              class="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300"
-            >
-              Cancel
-            </button>
-            <button
-              type="button"
-              @click="datos(perfil)"
-              class="px-4 py-2 bg-blueSecondary text-white rounded hover:bg-brandLinear"
-            >
-              Save changes
-            </button>
-          </div>
-        </form>
+
+            <div class="mb-3">
+              <label for="telefono" class="form-label">Teléfono</label>
+              <input
+                id="telefono"
+                type="tel"
+                class="form-control"
+                v-model="perfil.telefono"
+                required
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input
+                id="email"
+                type="email"
+                class="form-control"
+                v-model="perfil.correo"
+                required
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="ruc" class="form-label">RUC</label>
+              <input id="ruc" type="number" class="form-control" v-model="perfil.ruc" required />
+            </div>
+
+            <div class="mb-3">
+              <label for="birthDate" class="form-label">Cumpleaños</label>
+              <input
+                id="birthDate"
+                type="date"
+                class="form-control"
+                v-model="perfil.nacimiento"
+                required
+              />
+            </div>
+
+            <div class="d-flex justify-content-end">
+              <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">
+                Cancelar
+              </button>
+              <button type="submit" class="btn btn-primary">Guardar cambios</button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
-  </dialog>
+  </div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 import { apiClient } from '../../tools/axios'
+
+import { IconCamera } from '@tabler/icons-vue'
 
 defineProps({
   perfil: { type: Object, required: true }

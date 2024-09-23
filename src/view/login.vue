@@ -1,54 +1,4 @@
 <template>
-  <!-- <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-    <div class="mx-auto max-w-[420px] min-w-[50vh]">
-      <h4 class="mb-2.5 text-4xl font-bold text-navy-700 dark:text-white">Iniciar sesión</h4>
-      <div class="mb-6 flex items-center gap-3">
-        <div class="h-px w-full bg-gray-200 dark:bg-navy-700"></div>
-        <p class="text-base text-gray-600 dark:text-white">o</p>
-        <div class="h-px w-full bg-gray-200 dark:bg-navy-700"></div>
-      </div>
-      <div class="mb-3">
-        <label
-          for="email"
-          class="bg-red-500 text-sm text-navy-700 dark:text-white ml-1.5 font-medium"
-        >
-          Usuario*
-        </label>
-
-        <input
-          type="text"
-          id="email"
-          autocomplete="off"
-          v-model="form.username"
-          placeholder="usuario **"
-          :class="{ 'border-red-600': errores?.username != null }"
-          class="mt-2 flex h-12 w-full items-center justify-center rounded-xl border bg-white/0 p-3 text-sm outline-none border-gray-200 dark:!border-white/10 dark:text-white"
-        />
-        <div v-if="errores?.username" class="text-red-600">
-          <span v-for="er in errores.username?._errors">{{ er }}</span>
-        </div>
-      </div>
-      <div class="mb-3">
-        <label for="password" class="text-sm text-navy-700 dark:text-white ml-1.5 font-medium">
-          Contraseña*
-        </label>
-        <input
-          type="password"
-          id="password"
-          autocomplete="off"
-          v-model="form.password"
-          placeholder="Min. 8 caracteres"
-          :class="{ 'border-red-600': errores?.password != null }"
-          class="mt-2 flex h-12 w-full items-center justify-center rounded-xl border bg-white/0 p-3 text-sm outline-none border-gray-200 dark:!border-white/10 dark:text-white"
-        />
-        <div v-if="errores?.password" class="text-red-600">
-          <span v-for="er in errores.password?._errors">{{ er }}</span>
-        </div>
-      </div>
-      <button @click="login" :disabled="loading" class="btn btn-primary">Iniciar sesión</button>
-    </div>
-  </div> -->
-
   <section class="bg-light py-3 py-md-5">
     <div class="container">
       <div class="row justify-content-center">
@@ -58,26 +8,42 @@
               <h2 class="fs-2 fw-bold text-start mb-4">Sign In</h2>
               <span class="text-secondary">Ingresa su usuario y contraseña</span>
 
-              <form class="pt-5" @submit.prevent="login">
+              <form class="pt-5" @submit.prevent="login" autocomplete="off">
                 <div class="row gy-2 overflow-hidden">
                   <div class="col-12">
                     <div class="d-flex gap-1">
                       <label for="mail" class="form-label fw-medium">Correo </label>
                       <div class="text-primary">*</div>
                     </div>
-                    <input type="text" class="form-control" :class="{ 'is-invalid': errores?.username != null }"
-                      v-model="form.username" id="mail" placeholder="rscl" required autocomplete="off" />
+                    <input
+                      type="text"
+                      class="form-control"
+                      :class="{ 'is-invalid': errores?.username != null }"
+                      v-model="form.username"
+                      id="mail"
+                      placeholder="rscl"
+                      required
+                      autocomplete="off"
+                    />
                     <div v-if="errores?.username" class="text-danger">
                       <span v-for="er in errores.username?._errors">{{ er }}</span>
                     </div>
                   </div>
                   <div class="col-12 mt-4">
-                    <div class="d-flex gap-1 ">
+                    <div class="d-flex gap-1">
                       <label for="mail" class="form-label fw-medium">Contraseña </label>
                       <div class="text-primary">*</div>
                     </div>
-                    <input type="password" :class="{ 'is-invalid': errores?.password != null }" v-model="form.password"
-                      required class="form-control" id="mail" placeholder="name@example.com" autocomplete="off" />
+                    <input
+                      type="password"
+                      :class="{ 'is-invalid': errores?.password != null }"
+                      v-model="form.password"
+                      required
+                      class="form-control"
+                      id="password"
+                      placeholder="name@example.com"
+                      autocomplete="off"
+                    />
                     <div v-if="errores?.password" class="text-danger">
                       <span v-for="er in errores.password?._errors">{{ er }}</span>
                     </div>
@@ -85,10 +51,16 @@
 
                   <div class="col-12">
                     <div class="d-grid my-3">
-                      <button class="btn btn-primary btn-lg" type="submit">Log in</button>
+                      <button
+                        class="btn btn-primary btn-lg"
+                        :disabled="loading"
+                        :class="{ 'is-loading': loading }"
+                        type="submit"
+                      >
+                        Log in
+                      </button>
                     </div>
                   </div>
-
                 </div>
               </form>
             </div>
@@ -114,7 +86,6 @@ const formSchema = z.object({
   username: z.string().min(1, { message: 'No debe ser vacio' }),
   password: z.string().min(1, { message: 'No debe ser vacio' })
 })
-
 
 type formSchemaType = z.infer<typeof formSchema>
 const errores = ref<z.ZodFormattedError<formSchemaType> | null>(null)
@@ -157,3 +128,14 @@ const login = async () => {
   loading.value = false
 }
 </script>
+
+<style lang="scss" scoped>
+.is-loading {
+  cursor: not-allowed;
+}
+
+.is-invalid {
+  border: 1px solid red;
+  transition: border-color 1.2s linear;
+}
+</style>
