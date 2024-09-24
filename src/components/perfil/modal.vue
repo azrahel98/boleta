@@ -28,10 +28,18 @@
                   class="rounded-circle"
                   style="width: 100px; height: 100px; object-fit: cover"
                 />
+
+                <img
+                  v-else-if="perfil.imagen"
+                  alt="Profile"
+                  :src="`data:image/png;base64,${perfil.imagen}`"
+                  class="rounded-circle"
+                  style="width: 100px; height: 100px; object-fit: cover"
+                />
                 <img
                   v-else
                   alt="Profile"
-                  :src="`data:image/png;base64,${perfil.imagen}`"
+                  src="../../assets/logo.png"
                   class="rounded-circle"
                   style="width: 100px; height: 100px; object-fit: cover"
                 />

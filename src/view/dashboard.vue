@@ -2,7 +2,7 @@
   <div class="main-page">
     <sidebarBs :is-open="isOpen" :toggle="toggleSidebar" :close="closeSidebar" />
     <div class="pagina">
-      <navBar class="pt-2" :open="isOpen" :toggle="toggleSidebar" />
+      <navBar :open="isOpen" :toggle="toggleSidebar" />
       <RouterView />
     </div>
   </div>
@@ -13,13 +13,6 @@ import sidebarBs from '@com/sidebar-bs.vue'
 import navBar from '@com/nav.vue'
 import { ref } from 'vue'
 import { RouterView } from 'vue-router'
-import { router } from '../router'
-import { apiClient } from '../tools/axios'
-
-const sibar = ref({
-  abrir: true,
-  opacity: false
-})
 
 const isOpen = ref(false)
 
@@ -43,7 +36,9 @@ const closeSidebar = () => {
 
   .pagina {
     display: grid;
-    grid-template-rows: min-content auto;
+    height: 100vh;
+    overflow-y: auto;
+    grid-template-rows: 5vh 93vh;
     row-gap: 2vh;
   }
 }

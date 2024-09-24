@@ -1,5 +1,5 @@
 <template>
-  <div class="profile-header container text-dark p-3">
+  <div class="profile-header text-dark p-3">
     <div class="row align-items-center">
       <div class="col-auto">
         <div class="position-relative">
@@ -70,14 +70,7 @@
 
 <script setup lang="ts">
 import ModalPerfil from './/modal.vue'
-import {
-  IconCamera,
-  IconHome2,
-  IconPhone,
-  IconMailAi,
-  IconCake,
-  IconBuildingBank
-} from '@tabler/icons-vue'
+import { IconHome2, IconPhone, IconMailAi, IconCake, IconBuildingBank } from '@tabler/icons-vue'
 
 defineProps({
   perfil: { type: Object, required: true }
@@ -87,6 +80,7 @@ defineProps({
 <style scoped>
 .profile-header {
   font-family: Arial, sans-serif;
+  height: 15vh;
 }
 
 .info {
