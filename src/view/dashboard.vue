@@ -33,13 +33,12 @@ const closeSidebar = () => {
     min-content
     auto;
   column-gap: 2vw;
+  padding: 0;
+  margin: 0;
 
   .pagina {
     display: grid;
     height: 100vh;
-    overflow-y: auto;
-    grid-template-rows: 5vh 93vh;
-    row-gap: 2vh;
   }
 }
 </style>

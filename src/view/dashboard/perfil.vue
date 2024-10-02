@@ -1,26 +1,12 @@
 <template>
   <div class="container pb-0 mb-0">
-    <Avatar :perfil="perfil" />
+    <Avatar :perfil="perfil" class="avatar-profile" />
     <div class="pagina">
-      <div class="container-lg pb-0 mb-0">
-        <div class="row rows-cards pb-0 mb-0 row-gap-3">
-          <div class="col-md-6 col-lg-3" v-for="job in vinculos">
-            <Card :job="job" />
-          </div>
-        </div>
+      <div class="lista">
+        <Card v-for="job in vinculos" :job="job" />
       </div>
-      <div class="informacion">
-        <div class="card mb-4">
-          <div class="card-body">
-            <h3 class="card-title">Education</h3>
-            <!-- <div v-for="(edu, index) in profile.education" :key="index" class="mb-3">
-              <h4 class="mb-1">{{ edu.school }}</h4>
-              <p class="mb-1">{{ edu.degree }}</p>
-              <p class="text-muted">{{ edu.date }}</p>
-            </div> -->
-          </div>
-        </div>
-      </div>
+
+      <div class="info"></div>
     </div>
   </div>
 </template>
@@ -63,15 +49,45 @@ watch(router.currentRoute, async (x: RouteLocationNormalizedLoadedGeneric, _y) =
 
 <style lang="scss" scoped>
 .container {
-  display: grid;
-  height: 92vh;
-  grid-template-rows: min-content auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 5vh;
+  height: 100vh;
+  width: 100%;
+
+  padding: 0;
+
+  .avatar-profile {
+    padding-top: 7vh;
+    height: max-content;
+  }
+
   .pagina {
     display: grid;
-    overflow-y: auto;
-    height: 100%;
     grid-template-columns: auto min-content;
+    padding: 0;
+    margin: 0;
     width: 100%;
+    box-sizing: border-box;
+    overflow-y: auto;
+
+    justify-items: center;
+    .lista {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      row-gap: 5px;
+      column-gap: 10px;
+    }
+    .info {
+      //min-width: 250px;
+    }
   }
+}
+
+.rows,
+.row {
+  padding: 0;
+  margin: 0;
 }
 </style>

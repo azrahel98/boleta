@@ -66,7 +66,11 @@ const ruta = (dni: string) => {
 
 <style lang="scss" scoped>
 .nav {
+  position: absolute;
+  right: 0;
   display: flex;
+  padding: 0;
+  margin: 0;
   justify-content: space-between;
   .card {
     margin: 0;

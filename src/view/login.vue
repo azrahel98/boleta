@@ -138,4 +138,7 @@ const login = async () => {
   border: 1px solid red;
   transition: border-color 1.2s linear;
 }
+section {
+  height: 100vh;
+}
 </style>

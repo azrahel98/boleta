@@ -2,8 +2,8 @@
   <div class="col-xl-3 col-xxl-2">
     <div class="sidebar">
       <div class="s-1 flex-column">
-        <div class="title">
-          <h1>Munives</h1>
+        <div class="title text-center">
+          <img src="../assets/logo.png" class="img-fluid pt-4" width="60" />
         </div>
         <hr class="solid pb-4" />
 
@@ -14,6 +14,14 @@
         <router-link :to="{ name: 'convocatorias' }" class="d-flex">
           <IconListDetails size="22" class="text-secondary" />
           <p class="text-secondary">Convocatorias</p>
+        </router-link>
+        <router-link
+          v-if="router.currentRoute.value.name == 'perfil'"
+          :to="{ name: 'perfil', params: { dni: router.currentRoute.value.params.dni } }"
+          class="d-flex active"
+        >
+          <IconListDetails size="22" class="text-secondary" />
+          <p class="text-secondary">{{ router.currentRoute.value.name }}</p>
         </router-link>
       </div>
 
@@ -32,6 +40,7 @@
 
 <script setup lang="ts">
 import { IconHomeFilled, IconListDetails } from '@tabler/icons-vue'
+import { router } from '../router'
 
 defineProps({
   open: { type: Boolean, required: true }
@@ -80,8 +89,8 @@ defineProps({
       p {
         padding: 0;
         margin: 0;
-        font-size: 1rem;
-        font-weight: 500;
+        font-weight: 400;
+        font-size: 15px;
         text-align: center;
         vertical-align: middle;
       }

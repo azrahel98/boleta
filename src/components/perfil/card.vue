@@ -3,7 +3,7 @@
     <div class="card-body">
       <div>
         <h5 class="card-title">{{ job.area }}</h5>
-        <h6 class="card-subtitle mb-2 text-muted">{{ job.cargo }}</h6>
+        <h6 class="card-subtitle text-muted">{{ job.cargo }}</h6>
       </div>
       <ul class="list-unstyled">
         <li class="mb-2">
@@ -21,15 +21,15 @@
         </li>
         <li v-if="job.renuncia" class="mb-2">
           <IconArrowRight size="20" class="text-danger" />
-          <span class="text-muted"> Renuncia:</span>
+          <span class="text-danger"> Renuncia:</span>
           {{ job.renuncia }}
         </li>
       </ul>
     </div>
-    <div class="card-footer bg-transparent">
+    <div class="card-footer" :class="[job.activo === 'N' ? 'bg-danger-subtle' : 'bg-transparent']">
       <small
         class="text-primary"
-        :class="[job.activo === 'N' ? 'text-danger' : 'text-primary fw-bold']"
+        :class="[job.activo === 'N' ? 'text-danger fw-bold' : 'text-primary fw-bold']"
       >
         {{ job.activo === 'N' ? 'Finalizado' : 'Activo' }}
       </small>
@@ -48,19 +48,21 @@ defineProps({
 <style lang="scss" scoped>
 .card {
   width: 100%;
-  height: 35vh;
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto min-content;
   .card-body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    row-gap: 5svh;
+    row-gap: 2vh;
   }
   .card-title {
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: bold;
   }
   .card-subtitle {
-    font-size: 0.875rem;
+    font-size: 0.78rem;
   }
   .mb-2 {
     font-size: 0.875rem;

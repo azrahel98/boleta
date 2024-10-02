@@ -1,5 +1,5 @@
 <template>
-  <div class="profile-header text-dark p-3">
+  <div class="profile-header text-dark">
     <div class="row align-items-center">
       <div class="col-auto">
         <div class="position-relative">
@@ -26,7 +26,7 @@
       </div>
       <div class="col">
         <div class="d-flex justify-content-between align-items-center mb-2">
-          <h2 class="mb-0" style="text-transform: lowercase">{{ perfil.nombres }}</h2>
+          <h2 class="mb-0 fw-semibold">{{ perfil.nombres }}</h2>
           <div>
             <button
               class="btn btn-outline-info"
@@ -39,7 +39,7 @@
           </div>
         </div>
         <div
-          class="d-flex mb-2 flex-wrap row-gap-0 column-gap-2 p-0 m-0 justify-content-evenly me-5"
+          class="d-flex mb-2 flex-wrap row-gap-0 column-gap-2 p-0 m-0 justify-content-center justify-content-sm-start justify-content-md-start"
         >
           <div class="me-4 info p-0 m-0" v-if="perfil.direccion != null">
             <IconHome2 size="24" />
@@ -80,14 +80,14 @@ defineProps({
 <style scoped>
 .profile-header {
   font-family: Arial, sans-serif;
-  height: 15vh;
+  max-width: 65vw;
 }
 
 .info {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 14px;
+  font-size: 0.874rem;
 }
 
 .btn {
